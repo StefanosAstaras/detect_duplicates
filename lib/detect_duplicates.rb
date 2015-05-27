@@ -12,3 +12,32 @@ def usage()
   puts "    default: current directiry"
   puts
 end
+
+logname = "dup_log.txt"
+
+#Check if logname is free to write on
+if File.exist?(logname)
+  if File.file?(logname)
+    puts "A file with the name #{logname} already exists in the current directory."
+    puts "Overwrite? [yes/NO]"
+    if gets.chomp! == "yes"
+      puts "Are you sure you want to overwrite? [yes/NO]"
+      if gets.chomp! == "yes"
+        puts "Will overwrite file #{logname}"
+      else
+        puts "Aborting."
+        exit(1)
+      end
+    else
+      puts "Aborting."
+      exit(1)
+    end
+  else
+    puts "Error: there is a non-file object with the name #{logname} in the current directory."
+    puts "The filename #{logname} is needed to write the search results."
+    puts "Aborting."
+    exit(1)
+  end
+else
+  puts "Will create file #{logname}"
+end
