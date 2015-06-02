@@ -7,7 +7,7 @@ simple MD5 hashing. How it works:
 
 * It prints some crude progress details on the console.
 
-* The results are written on duplicates_log.txt (no actual deletions take place).
+* The results are written on dup_log.txt (no actual deletions take place).
 You will be informed early if such a file happens to exist in your top folder
 already.
 

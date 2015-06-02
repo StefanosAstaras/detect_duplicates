@@ -14,6 +14,8 @@ def usage()
 end
 
 logname = "dup_log.txt"
+cwd = (!ARGV[0].nil? && Dir.exist?(ARGV[0])) ? ARGV[0] : "."  #top directory
+bytes = (!ARGV[1].nil?) ? ARGV[1].to_i() : 1500               #bytes to read
 
 #Check if logname is free to write on
 if File.exist?(logname)
