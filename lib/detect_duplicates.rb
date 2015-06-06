@@ -43,3 +43,6 @@ if File.exist?(logname)
 else
   puts "Will create file #{logname}"
 end
+
+#Start!
+puts "Starting duplicate file detection on #{cwd} with a #{bytes}-byte limit."
