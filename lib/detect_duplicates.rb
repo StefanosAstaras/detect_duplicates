@@ -15,7 +15,9 @@ end
 
 logname = "dup_log.txt"
 cwd = (!ARGV[0].nil? && Dir.exist?(ARGV[0])) ? ARGV[0] : "."  #top directory
-bytes = (!ARGV[1].nil?) ? ARGV[1].to_i() : 1500               #bytes to read
+bytes = (!ARGV[1].nil?) ? ARGV[1].to_i() : 1_500_000               #bytes to read
+
+Dir.chdir(cwd)
 
 #Check if logname is free to write on
 if File.exist?(logname)
@@ -46,3 +48,10 @@ end
 
 #Start!
 puts "Starting duplicate file detection on #{cwd} with a #{bytes}-byte limit."
+
+hashes = Hash.new([])
+filenames = Dir.glob("**/*").select {|i| File.file?(i)}
+filenames.each do |f|
+  hash = Digest::MD5.hexdigest(File.read(f, bytes))
+  hashes[hash] = hashes[hash].push f
+end
