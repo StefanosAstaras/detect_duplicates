@@ -52,6 +52,6 @@ puts "Starting duplicate file detection on #{cwd} with a #{bytes}-byte limit."
 hashes = Hash.new([])
 filenames = Dir.glob("**/*").select {|i| File.file?(i)}
 filenames.each do |f|
-  hash = Digest::MD5.hexdigest(File.read(f, bytes))
+  hash = Digest::MD5.hexdigest(File.size(f).to_s() + File.read(f, bytes))
   hashes[hash] = hashes[hash].push f
 end
