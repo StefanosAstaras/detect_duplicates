@@ -59,7 +59,7 @@ filenames.each.with_index do |f, i|
     plaintext = File.size(f).to_s() + File.read(f)
   end
   hash = Digest::MD5.hexdigest(plaintext)
-  hashes[hash] = hashes[hash].push f
+  hashes[hash].push(f)
   puts "Completed file #{i} of #{filenames.size}"
 end
 
@@ -67,7 +67,7 @@ end
 puts "Finished calculating. Writing results..."
 File.open(logname, "w") do |log_file|
   log_file.write("Completed detect_duplicates.rb on #{Time.now} from #{cwd} with #{bytes} byte limit.\n")
-  log_file.write("Start of log:\n")
+  log_file.write("Start of log:\n\n")
   
   hashes.each_value do |ifiles|
     if ifiles.size > 1
