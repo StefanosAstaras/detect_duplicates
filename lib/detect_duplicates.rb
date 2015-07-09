@@ -51,15 +51,21 @@ end
 #Start!
 puts "Starting duplicate file detection on #{cwd} with a #{bytes}-byte limit."
 hashes = Hash.new([])
+files_with_errors = []
 filenames = Dir.glob("**/*").select {|i| File.file?(i)}
 filenames.each.with_index do |f, i|
-  if (bytes > 0)
-    plaintext = File.size(f).to_s() + File.read(f, bytes)
-  else
-    plaintext = File.size(f).to_s() + File.read(f)
+  begin
+    if (bytes > 0)
+      plaintext = File.size(f).to_s() + File.read(f, bytes)
+    else
+      plaintext = File.size(f).to_s() + File.read(f)
+    end
+    hash = Digest::MD5.hexdigest(plaintext)
+    hashes[hash].push(f)
+  rescue
+    puts "Error reading file #{f}!"
+    files_with_errors.push_back(f)
   end
-  hash = Digest::MD5.hexdigest(plaintext)
-  hashes[hash].push(f)
   puts "Completed file #{i} of #{filenames.size}"
 end
 
@@ -75,6 +81,12 @@ File.open(logname, "w") do |log_file|
       ifiles.each {|i| log_file.write(i + "\n")}
       log_file.write("-------------------------\n")
     end
+  end
+  
+  if !files_with_errors.empty?
+    log_file.write("-----Error reading these files-----\n")
+    files_with_error.each {|i| log_file.write(i + "\n")}
+    log_file.write("-----------------------------------\n")
   end
   
   log_file.write("\nEnd of log.")
