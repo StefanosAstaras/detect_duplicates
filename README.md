@@ -1,7 +1,5 @@
 #detect_duplicates
 
-Note: detect_duplicates is not finished yet and doesn't work.
-
 This Ruby script recursively searches your filesystem for duplicate files using 
 simple MD5 hashing. How it works:
 
