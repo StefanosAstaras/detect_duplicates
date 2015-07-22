@@ -9,8 +9,14 @@ def usage()
   puts "    default: 1500000"
   puts "    use 0 to read entire files"
   puts "  top_directory is the directory from which the script will start its recursive search"
-  puts "    default: current directiry"
+  puts "    default: current directory"
   puts
+end
+
+if !ARGV[0].nil? && ARGV[0].to_s()[0] == '-'
+  #User tried to get help - probably passed --help -h --usage etc.
+  usage()
+  exit(0)
 end
 
 logname = "dup_log.txt"
@@ -50,9 +56,11 @@ end
 
 #Start!
 puts "Starting duplicate file detection on #{cwd} with a #{bytes}-byte limit."
+puts "Getting list of files..."
 hashes = {}
 files_with_errors = []
 filenames = Dir.glob("**/*").select {|i| File.file?(i)}
+filenames.map! {|i| File.expand_path(i)}
 filenames.each.with_index do |f, i|
   begin
   
