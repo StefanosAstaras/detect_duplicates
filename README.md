@@ -21,3 +21,8 @@ the absolute individual MD5 hash of each file is not relevant in itself.
 
 * You can control its behavior with command line arguments. Or you can drop it
 in the top folder you want to recursively search and double click (default way).
+
+The actual script is in lib/.
+
+Also, errors during file reading (most likely due to empty files) are logged as
+well.
